@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Button, Checkbox, Col, Form, Input, Row } from "antd";
 
@@ -9,8 +9,12 @@ import { useMutation } from "react-query";
 import { loginApi } from "../../service/api.service";
 
 const Auth = () => {
+
+  const [ loading, setLoading ] = useState( false )
+
   const { mutate } = useMutation( loginApi, {
     onMutate: ( variables ) => {
+      setLoading( true )
       // A mutation is about to happen!
 
       // Optionally return a context containing data to use when for example rolling back
@@ -18,9 +22,11 @@ const Auth = () => {
     },
     onError: ( error, variables, context ) => {
       // An error happened!
+      setLoading( false )
     },
     onSuccess: ( data, variables, context ) => {
       // Boom baby!
+      setLoading( false )
     },
     onSettled: ( data, error, variables, context ) => {
       // Error or success... doesn't matter!
@@ -101,7 +107,7 @@ const Auth = () => {
                   size="large"
                   className="submit-btn"
                   htmlType="submit"
-                // loading={ loading }
+                  loading={ loading }
                 >
                   Sign In
                 </Button>
