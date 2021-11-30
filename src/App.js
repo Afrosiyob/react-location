@@ -5,31 +5,31 @@ import PageOne from "./pages/admin/pageOne/PageOne";
 import PageTwo from "./pages/admin/pageTwo/PageTwo";
 import Admin from "./pages/admin/Admin";
 
-function App() {
+function App () {
   // Set up a ReactLocation instance
   const location = new ReactLocation();
 
-  const accessToken = localStorage.getItem("accessToken");
+  let accessToken = localStorage.getItem( "accessToken" );
 
   return (
     <Router
-      location={location}
-      routes={[
+      location={ location }
+      routes={ [
         {
           path: "/",
-          element: <Navigate to="/admin" replace={true} />,
+          element: <Navigate to="/admin" replace={ true } />,
         },
         {
           path: "admin",
           element: accessToken ? (
             <Admin />
           ) : (
-            <Navigate to="/auth" replace={true} />
+            <Navigate to="/auth" replace={ true } />
           ),
           children: [
             {
               path: "/",
-              element: <Navigate to="/admin/page-one" replace={true} />,
+              element: <Navigate to="/admin/page-one" replace={ true } />,
             },
             {
               path: "page-one",
@@ -41,7 +41,7 @@ function App() {
             },
             {
               path: "*",
-              element: <Navigate to="/admin/page-one" replace={true} />,
+              element: <Navigate to="/admin/page-one" replace={ true } />,
             },
           ],
         },
@@ -51,9 +51,9 @@ function App() {
         },
         {
           path: "*",
-          element: <Navigate to="/admin" replace={true} />,
+          element: <Navigate to="/admin" replace={ true } />,
         },
-      ]}
+      ] }
     />
   );
 }

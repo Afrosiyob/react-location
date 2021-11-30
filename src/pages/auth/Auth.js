@@ -7,10 +7,13 @@ import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import "./Auth.scss";
 import { useMutation } from "react-query";
 import { loginApi } from "../../service/api.service";
+import { useNavigate } from "react-location";
 
 const Auth = () => {
 
   const [ loading, setLoading ] = useState( false )
+  const navigate = useNavigate()
+
 
   const { mutate } = useMutation( loginApi, {
     onMutate: ( variables ) => {
@@ -26,7 +29,12 @@ const Auth = () => {
     },
     onSuccess: ( data, variables, context ) => {
       // Boom baby!
-      setLoading( false )
+      console.log( data );
+      const { data: { accessToken, refreshToken } } = data
+      localStorage.setItem( "accessToken", accessToken )
+      localStorage.setItem( "refreshToken", refreshToken )
+      setLoading( false );
+      navigate( { to: '/admin' } )
     },
     onSettled: ( data, error, variables, context ) => {
       // Error or success... doesn't matter!
